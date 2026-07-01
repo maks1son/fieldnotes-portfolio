@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import {
   motion,
   useMotionValueEvent,
   useReducedMotion,
-  useScroll
+  useScroll,
+  useTransform
 } from "motion/react";
 import { filters, projects, type Project, type ProjectCategory } from "./data/projects";
 
@@ -28,58 +29,34 @@ function Reveal({ children, className = "" }: { children: ReactNode; className?:
   );
 }
 
-function Preloader() {
+function IntroScroll() {
+  const ref = useRef<HTMLElement | null>(null);
   const reducedMotion = useReducedMotion();
-  const [count, setCount] = useState(0);
-  const [done, setDone] = useState(Boolean(reducedMotion));
-  const [removed, setRemoved] = useState(Boolean(reducedMotion));
-
-  useEffect(() => {
-    if (reducedMotion) return;
-
-    document.body.classList.add("is-loading");
-    const start = performance.now();
-    let frame = 0;
-    let removeTimer = 0;
-
-    const tick = (now: number) => {
-      const progress = Math.min((now - start) / 1180, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setCount(Math.round(eased * 100));
-
-      if (progress < 1) {
-        frame = requestAnimationFrame(tick);
-      } else {
-        setDone(true);
-        document.body.classList.remove("is-loading");
-        removeTimer = window.setTimeout(() => setRemoved(true), 760);
-      }
-    };
-
-    frame = requestAnimationFrame(tick);
-
-    return () => {
-      cancelAnimationFrame(frame);
-      window.clearTimeout(removeTimer);
-      document.body.classList.remove("is-loading");
-    };
-  }, [reducedMotion]);
-
-  if (removed) return null;
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"]
+  });
+  const imageY = useTransform(scrollYProgress, [0, 1], reducedMotion ? [0, 0] : [0, -72]);
+  const imageScale = useTransform(scrollYProgress, [0, 1], reducedMotion ? [1, 1] : [0.92, 1.04]);
+  const titleY = useTransform(scrollYProgress, [0, 1], reducedMotion ? [0, 0] : [0, -28]);
+  const opacity = useTransform(scrollYProgress, [0, 0.84, 1], [1, 1, 0]);
 
   return (
-    <div className={`preloader ${done ? "is-done" : ""}`} aria-hidden="true">
-      <div className="preloader__inner">
-        <div className="preloader__title">
-          <p className="preloader__name">Максим</p>
-          <p className="preloader__role">AI websites and deployed portfolio work</p>
-        </div>
-        <div className="preloader__frame">
-          <img src={asset("mint-and-coffee.jpg")} alt="" />
-        </div>
-        <div className="preloader__counter">{count}%</div>
+    <section className="intro-scroll" ref={ref} aria-label="Начало портфолио">
+      <div className="intro-scroll__stage">
+        <motion.div className="intro-scroll__title" style={{ y: titleY, opacity }}>
+          <p>Максим</p>
+          <span>Сайты, лендинги, интерфейсы</span>
+        </motion.div>
+        <motion.figure className="intro-scroll__frame" style={{ y: imageY, scale: imageScale, opacity }}>
+          <img src={asset("portfolio-studio.jpg")} alt="" />
+        </motion.figure>
+        <motion.div className="intro-scroll__cue" style={{ opacity }}>
+          <span>Scroll</span>
+          <span aria-hidden="true">↓</span>
+        </motion.div>
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -108,11 +85,11 @@ function Header({ onMenuOpen }: { onMenuOpen: () => void }) {
     <header className="site-header">
       <a className="brand" href="#top" aria-label="В начало">
         <span>M.</span>
-        <span>AI Websites</span>
+        <span>Portfolio</span>
       </a>
       <nav className="nav-pills" aria-label="Основная навигация">
-        <a href="#work">Selected<sup>8</sup></a>
-        <a href="#capabilities">Capabilities<sup>4</sup></a>
+        <a href="#work">Work<sup>{projects.length}</sup></a>
+        <a href="#services">Services<sup>4</sup></a>
         <a href="#contact">Contact</a>
       </nav>
       <button className="menu-button" type="button" onClick={onMenuOpen}>
@@ -130,15 +107,15 @@ function Hero() {
           <div className="hero__kicker">
             <span>Portfolio index</span>
             <span>Deployed work</span>
-            <span>AI-assisted design and frontend</span>
+            <span>Design, frontend, deploy</span>
           </div>
           <h1>
             Сайты, которые уже можно <em>показывать клиентам.</em>
           </h1>
           <p className="hero__text">
-            Портфолио из живых проектов: лендинги, локальный бизнес, e-commerce, SaaS
-            и приложение. Сделано как рабочая витрина, а не как папка со случайными
-            ссылками.
+            Портфолио из живых проектов: лендинги, локальный бизнес, e-commerce и SaaS.
+            Каждый кейс открывается по публичной ссылке, чтобы работу можно было
+            проверить без длинных пояснений.
           </p>
           <div className="hero__actions">
             <a className="button button--dark" href="#work">Смотреть работы</a>
@@ -153,8 +130,8 @@ function Hero() {
             <img src={asset("58-coffee-shop.jpg")} alt="Скриншот лендинга 58 Кофе" />
           </div>
           <div className="hero-card__caption">
-            <strong>Selected cover: 58 Coffee</strong>
-            <span>Real deployed preview captured from production.</span>
+            <strong>Живой кейс: 58 Кофе</strong>
+            <span>Публичный лендинг, который можно открыть и проверить.</span>
           </div>
         </Reveal>
       </div>
@@ -169,7 +146,7 @@ function Marquee() {
     "Product UI",
     "Static deploys",
     "Next.js exports",
-    "AI-assisted production"
+    "Design systems"
   ];
 
   return (
@@ -316,32 +293,32 @@ function WorkSection() {
 function Capabilities() {
   const rows = [
     {
-      title: "Лендинги под нишу",
-      text: "От кофейни и гостиницы до оценочной компании: структура, визуал и тексты под конкретный рынок, а не универсальная заготовка."
+      title: "Лендинг под услугу",
+      text: "Первый экран, структура, визуал, блоки доверия и понятный следующий шаг для заявки или покупки."
     },
     {
-      title: "Дизайн-система",
-      text: "Типографика, цвета, ритм, карточки, состояния и адаптив собраны в единую систему, чтобы проект выглядел дороже и держался на всех экранах."
+      title: "Редизайн витрины",
+      text: "Если сайт уже есть, можно собрать более сильную подачу: типографика, сетка, изображения, адаптив и микроанимации."
     },
     {
-      title: "Frontend and deploy",
-      text: "Работы не остаются в макете: собираются, проверяются, публикуются и получают публичную ссылку, которую можно отправлять клиенту."
+      title: "Сайт для локального бизнеса",
+      text: "Страницы услуг, доверие, адреса, преимущества и аккуратная подача без лишней сложности."
     },
     {
-      title: "AI как ускоритель",
-      text: "AI используется не для сырой генерации, а для скорости: дизайн-направления, тексты, ассеты, исследование, проверка и итерации."
+      title: "Публичный запуск",
+      text: "Проект собирается, проверяется на экранах и публикуется по ссылке, которую удобно отправлять клиентам и партнерам."
     }
   ];
 
   return (
-    <section className="section" id="capabilities">
+    <section className="section" id="services">
       <Reveal className="section-head">
-        <div className="section-label">02 / Capabilities</div>
+        <div className="section-label">02 / Services</div>
         <div>
-          <h2 className="section-title">Что продаёт это портфолио.</h2>
+          <h2 className="section-title">Форматы работы.</h2>
           <p className="section-copy">
-            Витрина должна не просто нравиться. Она должна объяснять, за что клиент платит
-            и почему тебе можно доверить сайт.
+            Коротко о том, что можно заказать, если нужен сайт, который выглядит
+            собранно и работает по публичной ссылке.
           </p>
         </div>
       </Reveal>
@@ -363,15 +340,23 @@ function Contact() {
   return (
     <Reveal className="contact" >
       <section id="contact" className="contact__grid">
-        <h2>Нужен сайт, который можно показывать без объяснений?</h2>
+        <div>
+          <p className="contact__eyebrow">03 / Contact</p>
+          <h2>Нужен аккуратный сайт под задачу?</h2>
+        </div>
         <div>
           <p>
-            Упаковка, лендинг, портфолио, локальный бизнес, AI-автоматизация или
-            продуктовая витрина. Быстро, аккуратно, с публичным результатом.
+            Подойдет для локального бизнеса, услуги, портфолио, продуктовой страницы
+            или небольшой витрины. Можно начать с текущей идеи, ссылок на примеры
+            и желаемого срока.
           </p>
-          <a className="button" href="https://github.com/maks1son" target="_blank" rel="noopener">
-            Открыть GitHub
-          </a>
+          <div className="contact__actions">
+            <a className="button button--dark" href="https://github.com/maks1son" target="_blank" rel="noopener">
+              GitHub
+            </a>
+            <a className="button" href="#work">Смотреть работы</a>
+          </div>
+          <p className="contact__meta">Живые ссылки, дизайн, frontend и deploy в одном рабочем процессе.</p>
         </div>
       </section>
     </Reveal>
@@ -396,8 +381,8 @@ function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => void }) 
   }, [onClose, open]);
 
   const links = [
-    { href: "#work", number: "01", title: "Index", hint: "8 deployed works" },
-    { href: "#capabilities", number: "02", title: "Capabilities", hint: "What clients buy" },
+    { href: "#work", number: "01", title: "Work", hint: `${projects.length} deployed works` },
+    { href: "#services", number: "02", title: "Services", hint: "Site formats" },
     { href: "#contact", number: "03", title: "Contact", hint: "Project discussion" }
   ];
 
@@ -406,7 +391,7 @@ function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => void }) 
       <div className="menu-overlay__top">
         <a className="brand" href="#top" onClick={onClose}>
           <span>M.</span>
-          <span>AI Websites</span>
+          <span>Portfolio</span>
         </a>
         <button className="menu-close" type="button" onClick={onClose}>
           Close
@@ -422,8 +407,8 @@ function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => void }) 
         ))}
       </div>
       <div className="menu-overlay__foot">
-        <span>React, TypeScript, Motion</span>
-        <span>Motion kept restrained</span>
+        <span>Selected deployed websites</span>
+        <span>Scroll, hover, open live work</span>
       </div>
     </div>
   );
@@ -434,10 +419,10 @@ export default function App() {
 
   return (
     <>
-      <Preloader />
       <ScrollProgress />
       <Header onMenuOpen={() => setMenuOpen(true)} />
       <main id="top">
+        <IntroScroll />
         <Hero />
         <Marquee />
         <WorkSection />
@@ -445,8 +430,8 @@ export default function App() {
         <Contact />
       </main>
       <footer className="site-footer">
-        <span>Максим: portfolio index</span>
-        <span>Built from deployed work screenshots</span>
+        <span>Максим: portfolio</span>
+        <span>Selected deployed websites</span>
       </footer>
       <MenuOverlay open={menuOpen} onClose={() => setMenuOpen(false)} />
     </>

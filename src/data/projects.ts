@@ -1,4 +1,4 @@
-export type ProjectCategory = "commerce" | "local" | "saas" | "app";
+export type ProjectCategory = "commerce" | "local" | "saas";
 
 export type Project = {
   slug: string;
@@ -21,8 +21,7 @@ export const filters: ProjectFilter[] = [
   { label: "All", value: "all" },
   { label: "Commerce", value: "commerce" },
   { label: "Local business", value: "local" },
-  { label: "SaaS", value: "saas" },
-  { label: "Apps", value: "app" }
+  { label: "SaaS", value: "saas" }
 ];
 
 export const projects: Project[] = [
@@ -36,17 +35,6 @@ export const projects: Project[] = [
     url: "https://58coffee-shop.expo.app",
     tagline: "Продающая витрина кофейного бренда с публичным deploy.",
     scope: "Design, frontend, deploy"
-  },
-  {
-    slug: "58coffee-app",
-    title: "58 Кофе: приложение",
-    category: "app",
-    kind: "PWA / App",
-    year: "2026",
-    image: "58-coffee-app.jpg",
-    url: "https://58coffee.expo.app",
-    tagline: "Веб-версия приложения как отдельный продуктовый кейс.",
-    scope: "Product UI, web app"
   },
   {
     slug: "spelo",
