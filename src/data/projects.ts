@@ -18,10 +18,10 @@ export type ProjectFilter = {
 };
 
 export const filters: ProjectFilter[] = [
-  { label: "All", value: "all" },
-  { label: "Commerce", value: "commerce" },
-  { label: "Local business", value: "local" },
-  { label: "SaaS", value: "saas" }
+  { label: "Все", value: "all" },
+  { label: "Витрины", value: "commerce" },
+  { label: "Бизнес", value: "local" },
+  { label: "Продукты", value: "saas" }
 ];
 
 export const projects: Project[] = [
@@ -33,7 +33,7 @@ export const projects: Project[] = [
     year: "2026",
     image: "58-coffee-shop.jpg",
     url: "https://58coffee-shop.expo.app",
-    tagline: "Продающая витрина кофейного бренда с публичным deploy.",
+    tagline: "Лендинг кофейного бренда: визуал, навигация, товары и заявка.",
     scope: "Design, frontend, deploy"
   },
   {
@@ -44,7 +44,7 @@ export const projects: Project[] = [
     year: "2026",
     image: "spelo.jpg",
     url: "https://maks1son.github.io/spelo/",
-    tagline: "Магазин фермерских ягод и фруктов с живой продуктовой подачей.",
+    tagline: "Фермерская витрина с продуктовой подачей, каталогом и доверием.",
     scope: "React, frontend, deploy"
   },
   {
@@ -55,7 +55,7 @@ export const projects: Project[] = [
     year: "2026",
     image: "ro63.jpg",
     url: "https://maks1son.github.io/ro63/",
-    tagline: "Сайт оценочной компании: доверие, услуги, структура обращения.",
+    tagline: "Сайт услуги: доверие, направления работы и понятный путь к заявке.",
     scope: "React, content, deploy"
   },
   {
@@ -66,7 +66,7 @@ export const projects: Project[] = [
     year: "2026",
     image: "mint-and-coffee.jpg",
     url: "https://maks1son.github.io/mint-and-coffee/",
-    tagline: "Кофейня с мятным акцентом, меню и цельной визуальной системой.",
+    tagline: "Сайт кофейни с меню, атмосферой и цельной визуальной системой.",
     scope: "Next.js, imagery, export"
   },
   {
@@ -77,7 +77,7 @@ export const projects: Project[] = [
     year: "2026",
     image: "cigar.jpg",
     url: "https://maks1son.github.io/cigar/",
-    tagline: "Барбершоп и сигарный клуб с плотной премиальной атмосферой.",
+    tagline: "Премиальный сайт для барбершопа и клуба с плотной атмосферой.",
     scope: "Next.js, design, export"
   },
   {
@@ -88,7 +88,7 @@ export const projects: Project[] = [
     year: "2026",
     image: "chaika.jpg",
     url: "https://maks1son.github.io/chaika/",
-    tagline: "Сайт гостиницы в Сызрани: номера, доверие, локальный спрос.",
+    tagline: "Сайт гостиницы: номера, доверие, локальный спрос и бронирование.",
     scope: "Next.js, hospitality"
   },
   {
@@ -99,7 +99,7 @@ export const projects: Project[] = [
     year: "2026",
     image: "pulsefeed.jpg",
     url: "https://maks1son.github.io/pulsefeed/",
-    tagline: "Лендинг продукта для аналитики Telegram и соцмедиа.",
+    tagline: "Продуктовый лендинг для аналитики Telegram и соцмедиа.",
     scope: "Static, product story"
   }
 ];

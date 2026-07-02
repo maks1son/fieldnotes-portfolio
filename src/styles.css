@@ -365,7 +365,7 @@ img {
   bottom: 14%;
   display: grid;
   gap: 6px;
-  max-width: 280px;
+  max-width: 330px;
   padding: 16px 18px;
   color: var(--dark-text);
   background: rgba(239, 242, 237, 0.94);
@@ -391,7 +391,8 @@ img {
 .marquee__track {
   display: flex;
   width: max-content;
-  animation: marquee 28s linear infinite;
+  will-change: transform;
+  animation: marquee 54s linear infinite;
 }
 
 .marquee__track span {
@@ -718,6 +719,16 @@ img {
   font-size: 13px;
 }
 
+.site-footer a {
+  color: inherit;
+  transition: color 220ms ease;
+}
+
+.site-footer a:hover,
+.site-footer a:focus-visible {
+  color: var(--ink);
+}
+
 .menu-overlay {
   position: fixed;
   inset: 0;
@@ -942,10 +953,6 @@ img {
 
   .site-header {
     padding-top: 16px;
-  }
-
-  .brand span:nth-child(2) {
-    display: none;
   }
 
   .menu-button {

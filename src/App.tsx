@@ -45,7 +45,7 @@ function IntroScroll() {
     <section className="intro-scroll" ref={ref} aria-label="Начало портфолио">
       <div className="intro-scroll__stage">
         <motion.div className="intro-scroll__title" style={{ y: titleY, opacity }}>
-          <p>Максим</p>
+          <p>shchmirv</p>
           <span>Сайты, лендинги, интерфейсы</span>
         </motion.div>
         <motion.figure className="intro-scroll__frame" style={{ y: imageY, scale: imageScale, opacity }}>
@@ -84,16 +84,16 @@ function Header({ onMenuOpen }: { onMenuOpen: () => void }) {
   return (
     <header className="site-header">
       <a className="brand" href="#top" aria-label="В начало">
-        <span>M.</span>
-        <span>Portfolio</span>
+        <span>@</span>
+        <span>shchmirv</span>
       </a>
       <nav className="nav-pills" aria-label="Основная навигация">
-        <a href="#work">Work<sup>{projects.length}</sup></a>
-        <a href="#services">Services<sup>4</sup></a>
-        <a href="#contact">Contact</a>
+        <a href="#work">Работы<sup>{projects.length}</sup></a>
+        <a href="#services">Услуги<sup>4</sup></a>
+        <a href="#contact">Контакт</a>
       </nav>
       <button className="menu-button" type="button" onClick={onMenuOpen}>
-        Menu
+        Меню
       </button>
     </header>
   );
@@ -105,22 +105,22 @@ function Hero() {
       <div className="hero__inner">
         <Reveal>
           <div className="hero__kicker">
-            <span>Portfolio index</span>
-            <span>Deployed work</span>
-            <span>Design, frontend, deploy</span>
+            <span>Сайты на заказ</span>
+            <span>Опубликованные работы</span>
+            <span>Дизайн, frontend, deploy</span>
           </div>
           <h1>
             Сайты, которые уже можно <em>показывать клиентам.</em>
           </h1>
           <p className="hero__text">
-            Портфолио из живых проектов: лендинги, локальный бизнес, e-commerce и SaaS.
-            Каждый кейс открывается по публичной ссылке, чтобы работу можно было
-            проверить без длинных пояснений.
+            Можно заказать лендинг, сайт для локального бизнеса, продуктовую витрину,
+            портфолио или редизайн существующей страницы. Ниже — опубликованные работы,
+            по которым видно стиль, качество и формат результата.
           </p>
           <div className="hero__actions">
             <a className="button button--dark" href="#work">Смотреть работы</a>
-            <a className="button" href="https://github.com/maks1son" target="_blank" rel="noopener">
-              GitHub maks1son
+            <a className="button" href="https://t.me/shchmirv" target="_blank" rel="noopener">
+              Telegram @shchmirv
             </a>
           </div>
         </Reveal>
@@ -130,8 +130,8 @@ function Hero() {
             <img src={asset("58-coffee-shop.jpg")} alt="Скриншот лендинга 58 Кофе" />
           </div>
           <div className="hero-card__caption">
-            <strong>Живой кейс: 58 Кофе</strong>
-            <span>Публичный лендинг, который можно открыть и проверить.</span>
+            <strong>Лендинг для кофейного бренда</strong>
+            <span>Витрина, навигация, товары и заявка в одном опубликованном сайте.</span>
           </div>
         </Reveal>
       </div>
@@ -141,18 +141,19 @@ function Hero() {
 
 function Marquee() {
   const items = [
-    "Landing pages",
-    "Local business",
-    "Product UI",
-    "Static deploys",
-    "Next.js exports",
-    "Design systems"
+    "Лендинги на заказ",
+    "Сайты для бизнеса",
+    "Редизайн сайта",
+    "Портфолио под ключ",
+    "Интернет-витрины",
+    "Frontend и deploy"
   ];
+  const marqueeItems = Array.from({ length: 6 }, () => items).flat();
 
   return (
     <div className="marquee" aria-hidden="true">
       <div className="marquee__track">
-        {[...items, ...items].map((item, index) => (
+        {marqueeItems.map((item, index) => (
           <span key={`${item}-${index}`}>{item}</span>
         ))}
       </div>
@@ -196,7 +197,7 @@ function ProjectRow({
         <br />
         {project.year}
       </span>
-      <span className="project-row__open">Live</span>
+      <span className="project-row__open">Сайт</span>
       <span className="project-row__mobile-image">
         <img src={asset(project.image)} alt={`Скриншот проекта ${project.title}`} loading="lazy" />
       </span>
@@ -225,12 +226,14 @@ function WorkSection() {
   return (
     <section className="section section--work" id="work">
       <Reveal className="section-head">
-        <div className="section-label">01 / Index</div>
+        <div className="section-label">01 / Work</div>
         <div>
-          <h2 className="section-title">Живые работы, сгруппированные как портфолио.</h2>
+          <h2 className="section-title">Сайты и лендинги, которые можно заказать под свою нишу.</h2>
           <p className="section-copy">
-            Сетка построена вокруг быстрых решений для клиента: открыть сайт, увидеть
-            визуальный уровень, понять нишу и роль работы.
+            Я делаю сайты для услуг, локального бизнеса, кофеен, гостиниц,
+            магазинов, продуктов и личных портфолио: структура, тексты, дизайн,
+            адаптив, frontend и публикация по ссылке. Ниже — примеры, по которым
+            видно уровень, стиль и тип задач.
           </p>
         </div>
       </Reveal>
@@ -346,17 +349,17 @@ function Contact() {
         </div>
         <div>
           <p>
-            Подойдет для локального бизнеса, услуги, портфолио, продуктовой страницы
-            или небольшой витрины. Можно начать с текущей идеи, ссылок на примеры
-            и желаемого срока.
+            Напиши в Telegram, если нужен лендинг, сайт для услуги, локального бизнеса,
+            портфолио, продуктовой страницы или небольшой витрины. Можно начать с идеи,
+            пары референсов и желаемого срока.
           </p>
           <div className="contact__actions">
-            <a className="button button--dark" href="https://github.com/maks1son" target="_blank" rel="noopener">
-              GitHub
+            <a className="button button--dark" href="https://t.me/shchmirv" target="_blank" rel="noopener">
+              Написать в Telegram
             </a>
             <a className="button" href="#work">Смотреть работы</a>
           </div>
-          <p className="contact__meta">Живые ссылки, дизайн, frontend и deploy в одном рабочем процессе.</p>
+          <p className="contact__meta">Telegram: @shchmirv. Живые ссылки, дизайн, frontend и deploy в одном рабочем процессе.</p>
         </div>
       </section>
     </Reveal>
@@ -381,20 +384,20 @@ function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => void }) 
   }, [onClose, open]);
 
   const links = [
-    { href: "#work", number: "01", title: "Work", hint: `${projects.length} deployed works` },
-    { href: "#services", number: "02", title: "Services", hint: "Site formats" },
-    { href: "#contact", number: "03", title: "Contact", hint: "Project discussion" }
+    { href: "#work", number: "01", title: "Работы", hint: `${projects.length} опубликованных сайтов` },
+    { href: "#services", number: "02", title: "Услуги", hint: "Что можно заказать" },
+    { href: "#contact", number: "03", title: "Контакт", hint: "Telegram @shchmirv" }
   ];
 
   return (
     <div className={`menu-overlay ${open ? "is-open" : ""}`} aria-hidden={!open}>
       <div className="menu-overlay__top">
         <a className="brand" href="#top" onClick={onClose}>
-          <span>M.</span>
-          <span>Portfolio</span>
+          <span>@</span>
+          <span>shchmirv</span>
         </a>
         <button className="menu-close" type="button" onClick={onClose}>
-          Close
+          Закрыть
         </button>
       </div>
       <div className="menu-overlay__body">
@@ -408,7 +411,7 @@ function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => void }) 
       </div>
       <div className="menu-overlay__foot">
         <span>Selected deployed websites</span>
-        <span>Scroll, hover, open live work</span>
+        <span>Telegram @shchmirv</span>
       </div>
     </div>
   );
@@ -430,8 +433,8 @@ export default function App() {
         <Contact />
       </main>
       <footer className="site-footer">
-        <span>Максим: portfolio</span>
-        <span>Selected deployed websites</span>
+        <span>shchmirv: сайты и лендинги</span>
+        <a href="https://t.me/shchmirv" target="_blank" rel="noopener">Telegram @shchmirv</a>
       </footer>
       <MenuOverlay open={menuOpen} onClose={() => setMenuOpen(false)} />
     </>

@@ -1,6 +1,6 @@
-# Fieldnotes Portfolio
+# shchmirv sites
 
-React portfolio for deployed client-facing work.
+React showcase for deployed client-facing sites, landing pages and product pages.
 
 ## Commands
 
