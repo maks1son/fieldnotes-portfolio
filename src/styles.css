@@ -576,6 +576,13 @@ img {
   padding: 16px;
   background: rgba(239, 242, 237, 0.06);
   border: 1px solid var(--line);
+  transition: border-color 220ms ease, background 220ms ease;
+}
+
+.preview-pane__image:hover,
+.preview-pane__image:focus-visible {
+  border-color: var(--line-strong);
+  background: rgba(239, 242, 237, 0.08);
 }
 
 .preview-pane__image img {
@@ -606,6 +613,46 @@ img {
 .preview-pane__count {
   color: var(--accent-2);
   font-variant-numeric: tabular-nums;
+}
+
+.preview-pane__details {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.preview-pane__details span {
+  min-width: 0;
+  padding: 12px 12px 14px 0;
+  border-right: 1px solid var(--line);
+}
+
+.preview-pane__details span:last-child {
+  border-right: 0;
+  padding-right: 0;
+  padding-left: 12px;
+}
+
+.preview-pane__details span:nth-child(2) {
+  padding-left: 12px;
+}
+
+.preview-pane__details small {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--ink-faint);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.preview-pane__details strong {
+  display: block;
+  color: var(--ink-soft);
+  font-size: 13px;
+  line-height: 1.35;
+  font-weight: 400;
 }
 
 .capabilities {

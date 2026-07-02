@@ -268,7 +268,7 @@ function WorkSection() {
         </Reveal>
 
         <Reveal className="preview-pane">
-          <div className="preview-pane__image">
+          <a className="preview-pane__image" href={activeProject.url} target="_blank" rel="noopener">
             <motion.img
               key={activeProject.slug}
               src={asset(activeProject.image)}
@@ -277,7 +277,7 @@ function WorkSection() {
               animate={{ opacity: 1, scale: 1.03 }}
               transition={{ duration: 0.48, ease }}
             />
-          </div>
+          </a>
           <div className="preview-pane__caption">
             <div>
               <strong>{activeProject.title}</strong>
@@ -285,6 +285,20 @@ function WorkSection() {
             </div>
             <span className="preview-pane__count">
               {String(activeIndex + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
+            </span>
+          </div>
+          <div className="preview-pane__details" aria-label="Детали выбранного проекта">
+            <span>
+              <small>Формат</small>
+              <strong>{activeProject.kind}</strong>
+            </span>
+            <span>
+              <small>Работа</small>
+              <strong>{activeProject.scope}</strong>
+            </span>
+            <span>
+              <small>Результат</small>
+              <strong>Публичная ссылка</strong>
             </span>
           </div>
         </Reveal>
