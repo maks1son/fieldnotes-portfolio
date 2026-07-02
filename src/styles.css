@@ -14,6 +14,7 @@
   --dark-muted: #606660;
   --max: 1480px;
   --pad: 28px;
+  --shot-ratio: 1422 / 1040;
   --font: "Helvetica Neue", Arial, sans-serif;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -348,9 +349,9 @@ img {
 
 .hero-card__media img {
   width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: contain;
-  background: #0b1515;
+  aspect-ratio: var(--shot-ratio);
+  object-fit: cover;
+  background: transparent;
   transform: scale(1);
   transition: transform 900ms var(--ease);
 }
@@ -562,7 +563,7 @@ img {
 .preview-pane {
   position: sticky;
   top: 112px;
-  min-height: 680px;
+  min-height: auto;
   display: grid;
   align-content: start;
   gap: 16px;
@@ -579,9 +580,10 @@ img {
 
 .preview-pane__image img {
   width: 100%;
-  height: min(62vh, 640px);
-  object-fit: contain;
-  background: #0b1515;
+  height: auto;
+  aspect-ratio: var(--shot-ratio);
+  object-fit: cover;
+  background: transparent;
 }
 
 .preview-pane__caption {
@@ -896,9 +898,9 @@ img {
 
   .project-row__mobile-image img {
     width: 100%;
-    aspect-ratio: 16 / 10;
-    object-fit: contain;
-    background: #0b1515;
+    aspect-ratio: var(--shot-ratio);
+    object-fit: cover;
+    background: transparent;
   }
 
   .capability {
@@ -972,7 +974,7 @@ img {
   }
 
   .hero-card__media img {
-    aspect-ratio: 16 / 12;
+    aspect-ratio: var(--shot-ratio);
   }
 
   .section {
